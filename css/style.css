@@ -50,7 +50,7 @@ a:hover { color: var(--accent); }
 /* ===== Header / Nav ===== */
 header {
   background: var(--navy);
-  padding: 1rem 0;
+  padding: 1.5rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -69,11 +69,28 @@ nav {
 nav .logo {
   font-family: var(--font-serif);
   color: var(--gold);
-  font-size: 1.25rem;
+  font-size: 3.75rem;
   font-weight: bold;
+  line-height: 1;
 }
 
 nav .logo span { color: var(--white); }
+
+/* Gold dot on the 'i' in Vita */
+nav .logo .logo-i {
+  color: var(--white);
+  position: relative;
+}
+nav .logo .logo-i::after {
+  content: '';
+  position: absolute;
+  top: 0.08em;
+  left: 0.1em;
+  width: 0.16em;
+  height: 0.16em;
+  background: var(--gold);
+  border-radius: 50%;
+}
 
 nav ul {
   list-style: none;
@@ -83,7 +100,7 @@ nav ul {
 
 nav ul li a {
   color: var(--gray-light);
-  font-size: 0.9rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   padding: 0.25rem 0;
@@ -109,6 +126,21 @@ main {
 .hero {
   text-align: center;
   padding: 4rem 0 3rem;
+}
+
+.hero-image {
+  margin-bottom: 2rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  max-height: 320px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .hero h1 {
