@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — LexVita</title>
+  <meta name="description" content="Law discoveries, legal tech tips, and practice notes.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="logo">Lex<span>Vita</span></a>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/blog/" class="active">Blog</a></li>
+        <li><a href="/consultation/">Consult</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Blog</h1>
+    <p style="color:var(--gray); margin-bottom:2rem;">Law discoveries, legal tech tips, and practice notes.</p>
+
+    <div class="blog-list" id="all-posts">
+      <!-- Posts are loaded from posts.json by main.js -->
+      <p class="text-center" style="color:var(--gray);">Loading posts...</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>LexVita &mdash; Law, Tech & Discovery. &copy; 2026.</p>
+    <p style="margin-top:0.5rem; font-size:0.8rem;">
+      Not legal advice. Opinions are my own.
+    </p>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
