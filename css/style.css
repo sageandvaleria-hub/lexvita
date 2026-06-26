@@ -50,7 +50,7 @@ a:hover { color: var(--accent); }
 /* ===== Header / Nav ===== */
 header {
   background: var(--navy);
-  padding: 1.5rem 0;
+  padding: 2.5rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -62,14 +62,15 @@ nav {
   margin: 0 auto;
   padding: 0 1.5rem;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
+  gap: 2rem;
 }
 
 nav .logo {
   font-family: var(--font-serif);
   color: var(--gold);
-  font-size: 3.75rem;
+  font-size: 8rem;
   font-weight: bold;
   line-height: 1;
 }
@@ -363,7 +364,9 @@ footer a { color: var(--gold); }
   h1 { font-size: 1.75rem; }
   h2 { font-size: 1.35rem; }
   .hero h1 { font-size: 2rem; }
-  nav { flex-direction: column; gap: 0.75rem; }
+  header { padding: 1rem 0; }
+  nav { flex-direction: column; gap: 0.5rem; align-items: center; }
+  nav .logo { font-size: 4rem; }
   nav ul { gap: 1rem; flex-wrap: wrap; justify-content: center; }
   main { padding: 2rem 1rem; }
   article.blog-post { padding: 1.5rem; }
