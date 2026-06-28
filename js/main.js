@@ -30,8 +30,10 @@ async function loadPosts() {
 
 function renderCard(post) {
   const tagsHtml = (post.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
+  const imageHtml = post.image ? `<img class="card-image" src="${post.image}" alt="${post.title}" loading="lazy">` : '';
   return `
     <div class="blog-card">
+      ${imageHtml}
       <div class="date">${formatDate(post.date)}</div>
       <h2><a href="${post.url}">${post.title}</a></h2>
       <p>${post.excerpt || ''}</p>
