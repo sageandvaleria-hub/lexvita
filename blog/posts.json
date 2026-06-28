@@ -2,8 +2,24 @@
   {
     "title": "Why Every Lawyer Should Have an AI Agent Team",
     "date": "2026-06-26",
-    "excerpt": "How I built a team of three AI agents — MaiGai, Sewa, and Ushe — to handle legal research, content creation, and personal assistance. No coding degree required.",
-    "tags": ["AI Agents", "Legal Tech", "Productivity"],
+    "excerpt": "How I built a team of three AI agents \u2014 MaiGai, Sewa, and Ushe \u2014 to handle legal research, content creation, and personal assistance. No coding degree required.",
+    "tags": [
+      "AI Agents",
+      "Legal Tech",
+      "Productivity"
+    ],
     "url": "/blog/posts/why-every-lawyer-should-have-an-ai-agent-team.html"
+  },
+  {
+    "title": "Lawyering in 2026: Building My Own Digital Firm",
+    "date": "2026-06-28",
+    "excerpt": "Lawyering in 2026: Building My Own Digital Firm If you\u2019d told me a year ago that I\u2019d be running my legal practice from my phone, I would have laughed.",
+    "tags": [
+      "Legal Tech",
+      "AI",
+      "Productivity",
+      "Nigerian Law"
+    ],
+    "url": "/blog/posts/lawyering-in-2026-building-my-own-digital-firm.html"
   }
 ]
