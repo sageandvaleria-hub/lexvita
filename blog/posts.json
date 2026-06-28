@@ -21,15 +21,5 @@
       "Nigerian Law"
     ],
     "url": "/blog/posts/lawyering-in-2026-building-my-own-digital-firm.html"
-  },
-  {
-    "title": "TEST - Automated Publish",
-    "date": "2026-06-28",
-    "excerpt": "This is a test post This is a test to verify the automated publish pipeline works. Important: This post will be deleted after testing.",
-    "tags": [
-      "Test",
-      "Automation"
-    ],
-    "url": "/blog/posts/test-automated-publish.html"
   }
 ]
