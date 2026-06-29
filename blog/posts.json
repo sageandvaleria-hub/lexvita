@@ -23,5 +23,20 @@
     ],
     "image": "",
     "url": "/blog/posts/lawyering-in-2026-building-my-own-digital-firm.html"
+  },
+  {
+    "title": "How I Built an AI Personal Assistant for My Law Practice Using PicoClaw and Telegram",
+    "date": "2026-06-29",
+    "excerpt": "--- title: \"How I Built an AI Personal Assistant for My Law Practice Using PicoClaw and Telegram\" tags: Legal Tech, AI, PicoClaw, Telegram, Productivi...",
+    "tags": [
+      "Legal Tech",
+      "AI",
+      "PicoClaw",
+      "Telegram",
+      "Productivity",
+      "Legal Practice"
+    ],
+    "image": "/assets/images/picoclaw-telegram-lawyer.jpg",
+    "url": "/blog/posts/how-i-built-an-ai-personal-assistant-for-my-law-practice-using-picoclaw-and-telegram.html"
   }
 ]
