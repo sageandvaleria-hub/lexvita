@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Lawyers: A Step-by-Step Guide to Setting Up Your Own AI Agents and Personal Assistants — LexVita</title>
+  <meta name="description" content="--- type: blog-post title: For Lawyers: A Step-by-Step Guide to Setting Up Your Own AI Agents and Personal Assistants category: Legal tags: Legal Tech...">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="logo">Lex<span>Vita</span></a>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/consultation/">Consult</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <article class="blog-post">
+      <img class="post-image" src="/assets/images/legal-ai-workspace.jpg" alt="For Lawyers: A Step-by-Step Guide to Setting Up Your Own AI Agents and Personal Assistants" loading="lazy">
+      <h1>For Lawyers: A Step-by-Step Guide to Setting Up Your Own AI Agents and Personal Assistants</h1>
+      <div class="post-meta">
+        2026-06-29 &middot; <span class="tag">Legal Tech</span> <span class="tag">AI</span> <span class="tag">Productivity</span> <span class="tag">Guide</span>
+      </div>
+
+      <p>---</p>
+<p>type: blog-post</p>
+<p>title: For Lawyers: A Step-by-Step Guide to Setting Up Your Own AI Agents and Personal Assistants</p>
+<p>category: Legal</p>
+<p>tags: Legal Tech, AI, Productivity, Guide</p>
+<p>created: 2026-06-29T07:27:55.585460</p>
+<p>status: draft</p>
+<p>image_suggestion: Law books, scales of justice, or legal documents</p>
+<p>---</p>
+
+<h1>For Lawyers: A Step-by-Step Guide to Setting Up Your Own AI Agents and Personal Assistants</h1>
+
+<h1>For Lawyers: A Step-by-Step Guide to Setting Up Your Own AI Agents and Personal Assistants</h1>
+
+<h2>Introduction</h2>
+
+<p>Imagine having a team of assistants working around the clock. Researching case law, drafting documents, managing your calendar, tracking deadlines, creating content, and handling client communications. All of it. Without hiring a single extra person.</p>
+
+<p>That is not a fantasy. That is PicoClaw.</p>
+
+<p>PicoClaw is an ultra-lightweight, self-hosted AI assistant framework written in Go. It is designed to be practical, private, and extensible. You run it on your own machine (or a cheap VPS), connect it to Telegram, and suddenly you have a personal AI assistant that understands your practice, your cases, and your workflow.</p>
+
+<p>This guide walks through everything. Installation, configuration, the tools and skills that matter most for a legal practice, and the real lessons learned from running it day-to-day.</p>
+
+<p>---</p>
+
+<h2>Why a Lawyer Needs This</h2>
+
+<p>Let us be honest about what a typical day looks like:</p>
+
+<ul>
+<li>You are juggling multiple cases with different courts, deadlines, and opposing counsel</li>
+<li>Research means digging through statutes, case law, and regulations</li>
+<li>Drafting documents requires precise formatting and proper citations</li>
+<li>Client communication happens across WhatsApp, email, phone calls</li>
+<li>You need to bill for your time but tracking it is a chore</li>
+<li>Content marketing? Who has the time?</li>
+</ul>
+
+<p>PicoClaw does not replace your judgment. It replaces the drudgery. The repetitive tasks. The items that pile up.</p>
+
+<p>---</p>
+
+<h2>What You Will Need</h2>
+
+<p>Before we start, here is the shopping list:</p>
+
+<ul>
+<li>A Linux machine. Any old laptop, a Raspberry Pi, or a cheap VPS will do.</li>
+<li>Telegram account. Free, and the bot API is excellent.</li>
+<li>Go 1.21+. The runtime.</li>
+<li>Python 3. For skill scripts.</li>
+<li>Git. For version control.</li>
+<li>About an hour. To get everything running.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Step 1: Install PicoClaw</h2>
+
+<p>PicoClaw is distributed as a single binary. Installation is straightforward:</p>
+
+<pre><code># Download the latest release for your platform
+wget https://github.com/your-org/picoclaw/releases/latest/download/picoclaw-linux-amd64.tar.gz
+
+# Extract
+tar xzf picoclaw-linux-amd64.tar.gz
+
+# Move to your PATH
+sudo mv picoclaw /usr/local/bin/
+</code></pre>
+
+<p>Alternatively, if you have Go installed, you can build from source:</p>
+
+<pre><code>git clone https://github.com/your-org/picoclaw.git
+cd picoclaw
+go build -o picoclaw .
+sudo mv picoclaw /usr/local/bin/
+</code></pre>
+
+<p>Verify the installation:</p>
+
+<pre><code>picoclaw version
+</code></pre>
+
+<p>You should see the version number and build info.</p>
+
+<p>---</p>
+
+<h2>Step 2: Create a Telegram Bot</h2>
+
+<p>This is the easiest part. Telegram bots are free and instant to set up.</p>
+
+<ol>
+<li>Open Telegram and search for **@BotFather**</li>
+<li>Send /newbot</li>
+<li>Choose a name (e.g., "My Legal Assistant")</li>
+<li>Choose a username (must end in bot, e.g., my_legal_assistant_bot)</li>
+<li>BotFather will give you a **token** — save this immediately</li>
+</ul>
+
+<p>The token looks like: 123456789:ABCdefGHIjklmNOPqrstUVwxyz</p>
+
+<p>This token is how PicoClaw connects to Telegram. Keep it private.</p>
+
+<p>---</p>
+
+<h2>Step 3: Configure PicoClaw</h2>
+
+<p>Create a configuration file. PicoClaw uses YAML for configuration.</p>
+
+<pre><code># config.yaml
+name: "PicoClaw"
+
+# Telegram configuration
+telegram:
+  token: "123456789:ABCdefGHIjklmNOPqrstUVwxyz"
+  chat_id: "your-chat-id"  # Your personal chat ID
+
+# Workspace
+workspace: "/home/you/picoclaw-workspace"
+
+# Skills directory
+skills_dir: "/home/you/picoclaw-workspace/skills"
+
+# Memory
+memory_file: "/home/you/picoclaw-workspace/memory/MEMORY.md"
+</code></pre>
+
+<p>To find your Telegram chat ID, send a message to your bot, then visit:</p>
+
+<pre><code>https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates
+</code></pre>
+
+<p>Look for "chat":{"id": in the response. That is your chat ID.</p>
+
+<p>---</p>
+
+<h2>Step 4: Set Up the Workspace</h2>
+
+<p>PicoClaw organizes everything in a workspace directory:</p>
+
+<pre><code>mkdir -p ~/picoclaw-workspace
+cd ~/picoclaw-workspace
+
+# Create the directory structure
+mkdir -p memory
+mkdir -p skills
+mkdir -p shared
+</code></pre>
+
+<p>The workspace structure looks like this:</p>
+
+<pre><code>picoclaw-workspace/
+  config.yaml              # Main configuration
+  memory/
+    MEMORY.md            # Long-term memory
+    YYYYMM/
+      YYYYMMDD.md      # Daily notes
+  skills/                  # Installed skills
+    maigai-legal-research/
+    sewa/
+    ushe-personal-assistant/
+    site-publisher/
+    weather/
+  shared/                  # Shared resources
+    mailman.py           # Email utility
+    reports/
+  vitowebsite/             # Optional: static site
+</code></pre>
+
+<p>---</p>
+
+<h2>Step 5: Run PicoClaw</h2>
+
+<pre><code>picoclaw --config config.yaml
+</code></pre>
+
+<p>That is it. Your bot is now live. Send a message to your Telegram bot and it should respond.</p>
+
+<p>For production use, you will want to run it as a service:</p>
+
+<pre><code># Create a systemd service
+sudo nano /etc/systemd/system/picoclaw.service
+</code></pre>
+
+<pre><code>[Unit]
+Description=PicoClaw AI Assistant
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/picoclaw --config /home/you/picoclaw-workspace/config.yaml
+WorkingDirectory=/home/you/picoclaw-workspace
+Restart=always
+User=you
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+
+<pre><code>sudo systemctl enable picoclaw
+sudo systemctl start picoclaw
+sudo systemctl status picoclaw
+</code></pre>
+
+<p>---</p>
+
+<h2>Step 6: Install Essential Skills</h2>
+
+<p>Skills are what make PicoClaw useful. They are modular extensions that add capabilities. Here are the ones that matter most for a legal practice.</p>
+
+<h3>6.1 Legal Research Skill (MaiGai)</h3>
+
+<p>This is the workhorse. It searches your legal library using keyword-based RAG (Retrieval-Augmented Generation) to find relevant statutes, case law, and commentary.</p>
+
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Searches a library of legal documents (PDFs, markdown files, DOCs)</li>
+<li>Returns relevant excerpts with citations</li>
+<li>Can research topics across maritime law, trade law, petroleum law, and general Nigerian law</li>
+<li>Tracks research tasks and reports</li>
+</ul>
+
+<p><strong>Commands:</strong></p>
+<ul>
+<li>`research <topic>` — Conduct legal research on a topic</li>
+<li>`search <query>` — Quick keyword search of the library</li>
+<li>`tasks` — Check pending research tasks</li>
+</ul>
+
+<p><strong>How to set it up:</strong></p>
+
+<pre><code># Install the skill
+cp -r maigai-legal-research ~/picoclaw-workspace/skills/
+
+# Build your legal library
+mkdir -p ~/picoclaw-workspace/shared/law-library/
+# Add your PDFs, statutes, case law documents here
+
+# Index the library
+python3 ~/picoclaw-workspace/skills/maigai-legal-research/scripts/index.py
+</code></pre>
+
+<p><strong>The RAG Index System:</strong></p>
+
+<p>The legal library uses a pre-built index for fast searching. The system:</p>
+
+<ol>
+<li>Scans all documents in your law library</li>
+<li>Chunks them into searchable segments</li>
+<li>Builds a keyword index</li>
+<li>Auto-updates when files change</li>
+</ul>
+
+<p>For auto-indexing, set up a cron job:</p>
+
+<pre><code>crontab -e
+# Add:
+0 * * * * cd ~/picoclaw-workspace && bash auto-index.sh
+</code></pre>
+
+<p>This reindexes every hour. You can also run it manually:</p>
+
+<pre><code>bash auto-index.sh        # Check and reindex if changed
+bash auto-index.sh force  # Force rebuild all
+bash auto-index.sh status # Show index health
+</code></pre>
+
+<h3>6.2 Personal Assistant Skill (Ushe)</h3>
+
+<p>Ushe manages your calendar, sets reminders, delegates tasks, and generates daily briefings.</p>
+
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Adds calendar events with tiered notifications</li>
+<li>Sets reminders for deadlines and court dates</li>
+<li>Delegates tasks to other agents (research, content creation)</li>
+<li>Generates morning and evening briefings</li>
+<li>Shows your schedule for the day/week</li>
+</ul>
+
+<p><strong>Commands:</strong></p>
+<ul>
+<li>`add-event <title> <date>` — Add a calendar event</li>
+<li>`remind me in <time> to <task>` — Set a reminder</li>
+<li>`delegate <agent> <task>` — Delegate a task to another agent</li>
+<li>`briefing` — Get today's briefing</li>
+<li>`schedule` — View upcoming events</li>
+</ul>
+
+<p><strong>Real-world use:</strong></p>
+
+<pre><code>You: "Remind me to file the motion by Friday at 4pm"
+PicoClaw: "Reminder set: File the motion - Friday at 16:00"
+
+You: "What is my schedule today?"
+PicoClaw: "Today's schedule:
+  09:00 — Client meeting (virtual)
+  11:00 — Court appearance at High Court
+  14:00 — Draft review session
+  16:00 — Filing deadline: Motion on Notice"
+</code></pre>
+
+<h3>6.3 Content Creator Skill (Sewa)</h3>
+
+<p>Sewa creates blog posts, social media content, and marketing assets. Perfect for building your firm's online presence without spending hours writing.</p>
+
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Writes blog posts with proper formatting</li>
+<li>Creates social media ad copy</li>
+<li>Generates YouTube video descriptions</li>
+<li>Automatically suggests featured images for blog posts</li>
+<li>Integrates with the site publisher for one-click publishing</li>
+</ul>
+
+<p><strong>Commands:</strong></p>
+<ul>
+<li>`blog <title> <content>` — Create a blog post draft</li>
+<li>`ad <type> <headline> <body> <cta>` — Create ad copy</li>
+</ul>
+
+<p><strong>The Blog Publishing Pipeline:</strong></p>
+
+<p>This is where things get really efficient. The workflow is:</p>
+
+<ol>
+<li>**You ask Sewa to draft a blog post** about a topic</li>
+<li>**Sewa creates the draft** with an image suggestion</li>
+<li>**You review and approve**</li>
+<li>**You say "publish it"** — PicoClaw formats the post, saves it, updates the blog index, commits to git, and pushes to GitHub</li>
+<li>**Cloudflare Pages auto-deploys** — the post is live in about 30 seconds</li>
+</ul>
+
+<p>No manual steps. No FTP. No WordPress login. No fuss.</p>
+
+<p><strong>Setting up the site:</strong></p>
+
+<p>The site is a static HTML/CSS site hosted on Cloudflare Pages (free tier). The structure:</p>
+
+<pre><code>vitowebsite/
+  index.html
+  css/style.css
+  blog/
+    index.html
+    posts.json        # Auto-updated index
+    posts/
+      *.html         # Published posts
+  assets/
+    images/
+  about/
+    index.html
+</code></pre>
+
+<p>Connect it to Cloudflare Pages via GitHub:</p>
+
+<ol>
+<li>Push the vitowebsite folder to a GitHub repo</li>
+<li>In Cloudflare Dashboard > Pages > Connect your GitHub repo</li>
+<li>Set build command to empty (it is pure static HTML)</li>
+<li>Set publish directory to / (root)</li>
+<li>Deploy</li>
+</ul>
+
+<p>Every time you publish a post, PicoClaw commits and pushes to GitHub, and Cloudflare auto-deploys.</p>
+
+<h3>6.4 Document Drafter Skill</h3>
+
+<p>Creates properly formatted legal documents with Nigerian court formatting standards.</p>
+
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Drafts motions with proper headings and formatting</li>
+<li>Creates legal opinions with citations</li>
+<li>Generates engagement letters</li>
+<li>Writes formal correspondence</li>
+<li>Pulls citations from your RAG library automatically</li>
+</ul>
+
+<p><strong>Commands:</strong></p>
+<ul>
+<li>`motion <details>` — Draft a motion</li>
+<li>`legal-opinion <topic> <analysis>` — Draft a legal opinion</li>
+<li>`letter <recipient> <subject>` — Draft a formal letter</li>
+<li>`engagement-letter <client> <scope>` — Draft an engagement letter</li>
+</ul>
+
+<h3>6.5 Case Manager Skill</h3>
+
+<p>Tracks all your cases, deadlines, milestones, and document checklists in one place.</p>
+
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Maintains a dashboard of all active cases</li>
+<li>Tracks court dates, filing deadlines, and milestones</li>
+<li>Manages document checklists per case</li>
+<li>Generates both text and HTML dashboard views</li>
+<li>Alerts you to upcoming deadlines</li>
+</ul>
+
+<p><strong>Commands:</strong></p>
+<ul>
+<li>`dashboard` — Show unified case dashboard</li>
+<li>`show <case>` — Show details for a specific case</li>
+<li>`add-milestone <case> <milestone> <date>` — Add a milestone</li>
+<li>`checklist <case>` — Show document checklist</li>
+<li>`check <case> <item>` — Mark checklist item as done</li>
+</ul>
+
+<p><strong>Real-world dashboard output:</strong></p>
+
+<pre><code>CASE DASHBOARD — 3 Active Cases
+
+CASE A — Next: Filing deadline 01/07
+   Status: Defence filed, awaiting hearing
+   Checklist: 5/8 complete
+   Deadline: 01/07/2026
+
+CASE B — Next: Mention 15/07
+   Status: Awaiting assignment
+   Checklist: 3/5 complete
+
+CASE C — Next: Judgment 24/08
+   Status: Trial concluded
+   Checklist: 8/8 complete
+</code></pre>
+
+<h3>6.6 Google Drive Integration</h3>
+
+<p>Connects PicoClaw to your Google Drive for file management.</p>
+
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Uploads and downloads case files</li>
+<li>Creates organized folder structures per case</li>
+<li>Shares documents with clients and colleagues</li>
+<li>Searches across your Drive</li>
+</ul>
+
+<p><strong>Setup requires:</strong></p>
+<ol>
+<li>A Google Cloud project with Drive API enabled</li>
+<li>OAuth 2.0 credentials (Desktop application type)</li>
+<li>Initial authorization (one-time browser login)</li>
+</ul>
+
+<p>Once set up, the token auto-refreshes — no further intervention needed.</p>
+
+<h3>6.7 Email Utility (Mailman)</h3>
+
+<p>A simple Python script that lets PicoClaw send emails.</p>
+
+<p><strong>Setup:</strong></p>
+<pre><code>export EMAIL_USER="your.email@gmail.com"
+export EMAIL_PASSWORD="your-app-password"
+</code></pre>
+
+<p>The app password is generated from your Google Account > Security > App Passwords. Use this instead of your real password.</p>
+
+<p>---</p>
+
+<h2>Step 7: Memory and Daily Notes</h2>
+
+<p>PicoClaw maintains two types of memory.</p>
+
+<h3>Long-term Memory (MEMORY.md)</h3>
+
+<p>This file stores important information that persists across sessions:</p>
+
+<ul>
+<li>Client preferences and contact details</li>
+<li>Case status summaries</li>
+<li>Important dates and deadlines</li>
+<li>Configuration notes</li>
+<li>Lessons learned</li>
+</ul>
+
+<p>PicoClaw updates this automatically when it notices something worth remembering. You can also ask:</p>
+
+<pre><code>"Remember that Mr. Smith prefers email communication"
+"Note that the filing fee for XYZ court is N5,000"
+</code></pre>
+
+<h3>Daily Notes</h3>
+
+<p>Each day gets a markdown file with that day's activities, decisions, and notes. This creates a searchable journal of your practice.</p>
+
+<pre><code>memory/202606/20260629.md
+</code></pre>
+
+<p>You can review past days:</p>
+
+<pre><code>"What did I do on Monday?"
+"What was discussed in the June 15 client meeting?"
+</code></pre>
+
+<p>---</p>
+
+<h2>Step 8: The Skill System — How It All Fits Together</h2>
+
+<p>Skills are the heart of PicoClaw's extensibility. Each skill is a self-contained directory with:</p>
+
+<pre><code>skills/skill-name/
+  SKILL.md          # Instructions for the AI on how to use this skill
+  scripts/          # Executable scripts
+  references/       # Templates, guides, examples
+</code></pre>
+
+<p>The SKILL.md file tells PicoClaw:</p>
+<ul>
+<li>When to use this skill</li>
+<li>How to invoke its scripts</li>
+<li>What parameters to pass</li>
+<li>Where to find reference materials</li>
+</ul>
+
+<p>When you ask PicoClaw to do something, it reads the relevant SKILL.md, understands the tool, and calls the appropriate script with the right parameters.</p>
+
+<h3>Creating Your Own Skills</h3>
+
+<p>You are not limited to pre-built skills. The skill format is simple enough that you can create custom ones:</p>
+
+<ol>
+<li>Create a directory: skills/my-custom-skill/</li>
+<li>Write a SKILL.md describing what it does and how to use it</li>
+<li>Add scripts or reference files as needed</li>
+<li>Tell PicoClaw about it — that is it</li>
+</ul>
+
+<p>For example, you could create a skill that:</p>
+<ul>
+<li>Generates bills of costs in a specific format</li>
+<li>Checks the Nigerian Gazette for new regulations</li>
+<li>Monitors court websites for judgment dates</li>
+<li>Sends birthday messages to clients</li>
+</ul>
+
+<p>---</p>
+
+<h2>Step 9: Putting It All Together — A Day in the Life</h2>
+
+<p>Here is what a typical day looks like with PicoClaw running.</p>
+
+<p><strong>07:00</strong> — Morning briefing arrives on Telegram:</p>
+
+<pre><code>GOOD MORNING — Monday, 29 June 2026
+
+Today's Schedule:
+  09:00 — Prep session re: Case A (cross-examination review)
+  11:00 — Court mention at High Court
+  14:00 — Client meeting (virtual)
+  16:00 — Filing deadline: Motion on Notice
+
+Upcoming Deadlines:
+  Tomorrow: File response in Case B
+  Friday: Judgment in Case C
+
+Research Tasks:
+  MaiGai completed: Maritime lien research
+  Sewa drafted: Blog post on arbitration clauses
+</code></pre>
+
+<p><strong>09:00</strong> — During the prep session, you ask:</p>
+
+<pre><code>You: "Search the law library for recent cases on cross-examination of expert witnesses"
+PicoClaw: "Found 3 relevant cases:
+1. XYZ v. ABC (2023) — On leading questions during cross-examination
+2. DEF v. GHI (2024) — On refreshing memory from documents
+3. JKL v. MNO (2025) — On impeaching credit of witness"
+</code></pre>
+
+<p><strong>11:00</strong> — At court, the judge gives a new date. You message:</p>
+
+<pre><code>You: "Add event: Case A next mention on 15/07/2026 at 09:00"
+PicoClaw: "Event added: Case A — Next Mention, 15/07/2026 at 09:00"
+</code></pre>
+
+<p><strong>14:00</strong> — Client meeting goes well. You ask:</p>
+
+<pre><code>You: "Draft an engagement letter for new client, Scope: Debt recovery"
+PicoClaw: "Draft ready. Key terms:
+- 10% contingency fee
+- Disbursements extra
+- Monthly progress reports
+Review and I will send it."
+</code></pre>
+
+<p><strong>16:00</strong> — Filing deadline met. You relax.</p>
+
+<p><strong>18:00</strong> — Evening briefing:</p>
+
+<pre><code>Evening Summary — Monday, 29 June 2026
+
+Completed Today:
+  Case A prep session
+  Court mention at High Court
+  Client meeting
+  Motion on Notice filed
+
+Pending:
+  Review MaiGai research on maritime liens
+  Approve Sewa blog post draft
+
+Tomorrow's Schedule:
+  10:00 — Conference call re: Case B
+  15:00 — Document review
+</code></pre>
+
+<p>---</p>
+
+<h2>Conclusion</h2>
+
+<p>PicoClaw is not just a tool. It is a force multiplier for your practice. It handles the repetitive work so you can focus on what matters: your clients, your cases, and your judgment.</p>
+
+<p>The setup takes an hour. The payoff is every single day after that.</p>
+
+<p>Start small. Install PicoClaw. Connect it to Telegram. Add one skill — maybe the legal research skill first. Use it for a week. Then add another. Before you know it, you will wonder how you ever managed without it.</p>
+
+<p>The future of legal practice is not about working harder. It is about working smarter. PicoClaw is how you get there.</p>
+
+
+<p>---</p>
+
+<p><em>Draft created by Content Creator Agent</em></p>
+
+<h2>🖼️ Suggested Image</h2>
+<p>Law books, scales of justice, or legal documents</p>
+
+<p>law books legal justice professional</p>
+
+
+    </article>
+  </main>
+
+  <footer>
+    <p>LexVita &mdash; Law, Tech & Discovery. &copy; 2026.</p>
+    <p style="margin-top:0.5rem; font-size:0.8rem;">
+      Not legal advice. Opinions are my own.
+    </p>
+  </footer>
+</body>
+</html>

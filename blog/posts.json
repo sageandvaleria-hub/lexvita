@@ -38,5 +38,18 @@
     ],
     "image": "/assets/images/picoclaw-telegram-lawyer.jpg",
     "url": "/blog/posts/how-i-built-an-ai-personal-assistant-for-my-law-practice-using-picoclaw-and-telegram.html"
+  },
+  {
+    "title": "For Lawyers: A Step-by-Step Guide to Setting Up Your Own AI Agents and Personal Assistants",
+    "date": "2026-06-29",
+    "excerpt": "--- type: blog-post title: For Lawyers: A Step-by-Step Guide to Setting Up Your Own AI Agents and Personal Assistants category: Legal tags: Legal Tech...",
+    "tags": [
+      "Legal Tech",
+      "AI",
+      "Productivity",
+      "Guide"
+    ],
+    "image": "/assets/images/legal-ai-workspace.jpg",
+    "url": "/blog/posts/for-lawyers-a-step-by-step-guide-to-setting-up-your-own-ai-agents-and-personal-assistants.html"
   }
 ]
