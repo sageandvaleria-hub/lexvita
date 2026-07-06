@@ -1,33 +1,8 @@
 [
   {
-    "title": "Why Every Lawyer Should Have an AI Agent Team",
-    "date": "2026-06-26",
-    "excerpt": "How I built a team of three AI agents \u2014 MaiGai, Sewa, and Ushe \u2014 to handle legal research, content creation, and personal assistance. No coding degree required.",
-    "tags": [
-      "AI Agents",
-      "Legal Tech",
-      "Productivity"
-    ],
-    "image": "/assets/images/hero-legal-tech.jpg",
-    "url": "/blog/posts/why-every-lawyer-should-have-an-ai-agent-team.html"
-  },
-  {
-    "title": "Lawyering in 2026: Building My Own Digital Firm",
-    "date": "2026-06-28",
-    "excerpt": "Lawyering in 2026: Building My Own Digital Firm If you\u2019d told me a year ago that I\u2019d be running my legal practice from my phone, I would have laughed.",
-    "tags": [
-      "Legal Tech",
-      "AI",
-      "Productivity",
-      "Nigerian Law"
-    ],
-    "image": "/assets/images/picoclaw-telegram-lawyer.jpg",
-    "url": "/blog/posts/lawyering-in-2026-building-my-own-digital-firm.html"
-  },
-  {
     "title": "For Lawyers: A Step-by-Step Guide to Setting Up Your Own AI Agents and Personal Assistants",
     "date": "2026-06-29",
-    "excerpt": "A complete walkthrough for lawyers who want to build their own AI assistant team using PicoClaw and Telegram. Covers installation, skills, and daily workflow.",
+    "excerpt": "Imagine having a team of assistants working around the clock. Researching case law, drafting documents, managing your calendar, tracking deadlines, creating content, and handling client communications",
     "tags": [
       "Legal Tech",
       "AI",
@@ -38,9 +13,22 @@
     "url": "/blog/posts/for-lawyers-a-step-by-step-guide-to-setting-up-your-own-ai-agents-and-personal-assistants.html"
   },
   {
+    "title": "Lawyering in 2026: Building My Own Digital Firm",
+    "date": "2026-06-28",
+    "excerpt": "If you\u2019d told me a year ago that I\u2019d be running my legal practice from my phone, I would have laughed. I\u2019m a lawyer, not a software engineer. My expertise is in the courtroom and the law library, not ",
+    "tags": [
+      "Legal Tech",
+      "AI",
+      "Productivity",
+      "Nigerian Law"
+    ],
+    "image": "/assets/images/picoclaw-telegram-lawyer.jpg",
+    "url": "/blog/posts/lawyering-in-2026-building-my-own-digital-firm.html"
+  },
+  {
     "title": "When Your Law Firm Has an AI Team That Actually Works",
     "date": "2026-07-06",
-    "excerpt": "When Your Law Firm Has an AI Team That Actually Works How one Nigerian practice automated client onboarding, legal research, proposal generation, and ...",
+    "excerpt": "How one Nigerian practice automated client onboarding, legal research, proposal generation, and caselaw tracking \u2014 without hiring a single extra associate.",
     "tags": [
       "AI",
       "Legal Tech",
@@ -49,5 +37,17 @@
     ],
     "image": "/assets/images/agentic-ai-law-firm.png",
     "url": "/blog/posts/when-your-law-firm-has-an-ai-team-that-actually-works.html"
+  },
+  {
+    "title": "Why Every Lawyer Should Have an AI Agent Team",
+    "date": "2026-06-26",
+    "excerpt": "I am a partner in a Lagos law firm. I also run a small team of AI agents. The difference?\n        My AI agents don't take lunch breaks, don't ask for salary reviews, and don't\n        complain about t",
+    "tags": [
+      "AI Agents",
+      "Legal Tech",
+      "Productivity"
+    ],
+    "image": "/assets/images/hero-legal-tech.jpg",
+    "url": "/blog/posts/why-every-lawyer-should-have-an-ai-agent-team.html"
   }
 ]
