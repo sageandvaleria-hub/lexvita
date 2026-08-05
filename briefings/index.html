@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LexVita — Law, Tech & Discovery</title>
-  <meta name="description" content="Law discoveries, legal tech tips, and tools for modern legal practice. Sharing insights for lawyers young and old.">
+  <title>Briefings — LexVita</title>
+  <meta name="description" content="Daily shipping, trade, and business briefings from the LexValeria agent team — archived for historical access.">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
 </head>
@@ -13,10 +13,10 @@
     <nav>
       <a href="/" class="logo">Lex<span class="logo-v">V</span><span class="logo-i">i</span><span class="logo-ta">ta</span></a>
       <ul>
-        <li><a href="/" class="active">Home</a></li>
+        <li><a href="/">Home</a></li>
         <li><a href="/about/">About</a></li>
         <li><a href="/blog/">Blog</a></li>
-        <li><a href="/briefings/">Briefings</a></li>
+        <li><a href="/briefings/" class="active">Briefings</a></li>
         <li><a href="/consultation/">Consult</a></li>
       </ul>
     </nav>
@@ -25,41 +25,13 @@
   <main>
     <div class="page-with-sidebar">
       <div>
-        <section class="hero">
-          <div class="hero-image">
-            <img src="/assets/images/hero-legal-tech.jpg" alt="Law and technology — a modern legal workspace" loading="lazy">
-          </div>
-          <h1>Law, Tech & Discovery</h1>
-          <p class="tagline">Sharing legal discoveries and modern tools for the practice of law.</p>
-          <p class="subtitle">
-            Practical insights on legal research, AI tools, case management, and the art of lawyering
-            — written for lawyers who want to work smarter, not harder.
-          </p>
-          <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-            <a href="/blog/" class="btn btn-primary">Read the Blog</a>
-            <a href="/consultation/" class="btn btn-outline">Book a Chat</a>
-          </div>
-        </section>
+        <h1>Briefings</h1>
+        <p style="color:var(--gray); margin-bottom:2rem;">Daily shipping, trade &amp; business briefings from the LexValeria agent team — global markets with a Nigerian &amp; West African lens.</p>
 
-        <section>
-          <h2 class="text-center mb-2">Latest from the Blog</h2>
-          <div class="blog-list" id="recent-posts">
-            <p class="text-center" style="color:var(--gray);">Loading posts...</p>
-          </div>
-          <div class="text-center mt-2">
-            <a href="/blog/" class="btn btn-outline">All Posts →</a>
-          </div>
-        </section>
-
-        <section>
-          <h2 class="text-center mb-2">Latest Briefings</h2>
-          <div class="blog-list" id="recent-briefings">
-            <p class="text-center" style="color:var(--gray);">Loading briefings...</p>
-          </div>
-          <div class="text-center mt-2">
-            <a href="/briefings/" class="btn btn-outline">All Briefings →</a>
-          </div>
-        </section>
+        <div class="blog-list" id="all-briefings">
+          <!-- Briefings are loaded from briefings.json by main.js -->
+          <p class="text-center" style="color:var(--gray);">Loading briefings...</p>
+        </div>
       </div>
 
       <aside class="sidebar">

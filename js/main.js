@@ -28,6 +28,34 @@ async function loadPosts() {
   }
 }
 
+// Fetch briefings data and render
+async function loadBriefings() {
+  try {
+    const response = await fetch('/briefings/briefings.json');
+    if (!response.ok) throw new Error('Failed to load briefings');
+    const briefings = await response.json();
+    
+    // Sort by date descending
+    briefings.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    // Render on home page (recent-briefings) and briefings page (all-briefings)
+    const recentContainer = document.getElementById('recent-briefings');
+    const allContainer = document.getElementById('all-briefings');
+
+    if (recentContainer) {
+      recentContainer.innerHTML = briefings.slice(0, 3).map(renderCard).join('');
+    }
+    if (allContainer) {
+      allContainer.innerHTML = briefings.map(renderCard).join('');
+    }
+  } catch (err) {
+    console.error('Error loading briefings:', err);
+    document.querySelectorAll('#all-briefings, #recent-briefings').forEach(el => {
+      el.innerHTML = '<p style="color:var(--gray);">No briefings yet. Check back soon!</p>';
+    });
+  }
+}
+
 function renderCard(post) {
   const tagsHtml = (post.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
   const imageHtml = post.image ? `<img class="card-image" src="${post.image}" alt="${post.title}" loading="lazy">` : '';
@@ -50,4 +78,7 @@ function formatDate(dateStr) {
 }
 
 // Load posts on page load
-document.addEventListener('DOMContentLoaded', loadPosts);
+document.addEventListener('DOMContentLoaded', () => {
+  loadPosts();
+  loadBriefings();
+});
