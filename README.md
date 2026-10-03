@@ -25,6 +25,8 @@ vitowebsite/
 │   └── index.html              # Consultation booking (GAS embed)
 ├── onboarding/
 │   └── index.html              # Generic info form (unlisted, on-request, noindex)
+├── tracker/
+│   └── index.html              # Portfolio build tracker (unlisted, noindex, rebuilt weekly)
 ├── css/
 │   └── style.css               # Stylesheet
 ├── js/

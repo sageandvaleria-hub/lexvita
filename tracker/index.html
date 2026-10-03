@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Build Tracker - LexVita</title>
+<meta name="description" content="Working tracker for the personal portfolio programme.">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+.tr { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+.tr-mast { border-bottom: 3px solid var(--gold); padding: 2.5rem 0 1.25rem; margin-bottom: 1.5rem;
+           display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
+.tr-kicker { font-family: var(--font-sans); font-size: .72rem; letter-spacing: .16em;
+             text-transform: uppercase; color: var(--gray); }
+.tr-mast h1 { font-size: 2.1rem; margin: .25rem 0 .35rem; }
+.tr-sub { color: var(--text-light); max-width: 60ch; margin: 0; }
+.tr-stamps { font-size: .78rem; color: var(--gray); text-align: right; line-height: 1.9; }
+.tr-stamps b { color: var(--navy); font-weight: 600; }
+.tr-answer { background: var(--navy); color: var(--cream); border-radius: var(--radius);
+             padding: 1.4rem 1.6rem; margin-bottom: 2.25rem; }
+.tr-answer h2 { color: var(--gold); font-size: .78rem; letter-spacing: .14em;
+                text-transform: uppercase; font-family: var(--font-sans); margin: 0 0 .5rem; }
+.tr-answer p { margin: 0; font-size: 1.02rem; }
+.tr h2.sec { font-size: 1.3rem; margin: 2.5rem 0 .25rem; padding-bottom: .5rem;
+             border-bottom: 1px solid var(--gray-light); }
+.tr .secnote { color: var(--gray); font-size: .88rem; margin: .5rem 0 1.25rem; }
+.tr-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; }
+.tr-card { background: var(--white); border: 1px solid var(--gray-light); border-radius: var(--radius);
+           padding: 1.1rem 1.2rem; }
+.tr-card h3 { font-size: .95rem; margin: 0 0 .35rem; font-family: var(--font-sans); color: var(--navy); }
+.tr-card .big { font-family: var(--font-serif); font-size: 1.55rem; color: var(--navy); line-height: 1.2; }
+.tr-card p { font-size: .86rem; color: var(--text-light); margin: .4rem 0 0; }
+.tr-card ul { margin: .5rem 0 0 1rem; font-size: .86rem; color: var(--text-light); }
+.tr-card li { margin-bottom: .3rem; }
+table.tr-t { width: 100%; border-collapse: collapse; font-size: .87rem; background: var(--white);
+             border: 1px solid var(--gray-light); border-radius: var(--radius); }
+table.tr-t th { text-align: left; background: #f4f1e9; color: var(--navy); font-family: var(--font-sans);
+                font-size: .72rem; letter-spacing: .06em; text-transform: uppercase;
+                padding: .6rem .7rem; border-bottom: 1px solid var(--gray-light); }
+table.tr-t td { padding: .55rem .7rem; border-bottom: 1px solid #f0efe9; vertical-align: middle; }
+table.tr-t tr:last-child td { border-bottom: none; }
+table.tr-t td.num, table.tr-t th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.tr-note { font-size: .78rem; color: var(--gray); margin-top: .6rem; }
+.tr-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.chip { display: inline-block; font-family: var(--font-sans); font-size: .68rem; letter-spacing: .05em;
+        text-transform: uppercase; padding: .18rem .5rem; border-radius: 999px; white-space: nowrap; }
+.chip-live, .chip-accepted { background: #e6f4ea; color: #12683a; }
+.chip-partial, .chip-pending, .chip-in-progress { background: #fdf3dd; color: #8a5a00; }
+.chip-queued, .chip-closed { background: #eceef2; color: #4b5563; }
+.chip-blocked { background: #fde9e9; color: #93231f; }
+.chip-building { background: #e8eef8; color: #1d3f74; }
+.bar { position: relative; height: 9px; background: #efece4; border-radius: 999px; overflow: hidden; min-width: 90px; }
+.barfill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; }
+.bar-gold { background: var(--gold); }
+.bar-navy { background: var(--navy-light); }
+.bar-red { background: #b23a35; }
+.barcap { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--navy); opacity: .65; }
+.tr-ladder { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+.tr-week { border-left: 3px solid var(--gold); padding: .2rem 0 .2rem 1.1rem; margin-bottom: 1.6rem; }
+.tr-week h3 { margin: 0 0 .15rem; font-size: 1.05rem; }
+.tr-week .when { font-family: var(--font-sans); font-size: .72rem; letter-spacing: .08em;
+                 text-transform: uppercase; color: var(--gold); }
+.tr-week ul { margin: .5rem 0 .5rem 1.1rem; font-size: .88rem; }
+.tr-week li { margin-bottom: .25rem; }
+.tr-week .del { font-size: .86rem; color: var(--text-light); }
+.tr-week .del b { color: var(--navy); }
+.tr-week .gate { font-size: .82rem; color: #7a2f2b; border-left: 2px solid #e0b3b0;
+                 padding-left: .7rem; margin-top: .4rem; }
+.tr-kv { font-size: .88rem; }
+.tr-kv dt { font-family: var(--font-sans); font-size: .72rem; text-transform: uppercase;
+            letter-spacing: .06em; color: var(--gray); margin-top: .7rem; }
+.tr-kv dd { margin: .15rem 0 0; color: var(--text-light); }
+@media print { header, footer, .tr-answer { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+               .tr-week { break-inside: avoid; } }
+@media (max-width: 640px) {
+  .tr-stamps { text-align: left; }
+  table.tr-t { font-size: .8rem; }
+}
+</style>
+</head>
+<body>
+<header>
+  <nav>
+    <a href="/" class="logo">Lex<span class="logo-v">V</span><span class="logo-i">i</span><span class="logo-ta">ta</span></a>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/briefings/">Briefings</a></li>
+      <li><a href="/consultation/">Consult</a></li>
+    </ul>
+  </nav>
+</header>
+<main class="tr">
+  <div class="tr-mast">
+    <div>
+      <span class="tr-kicker">LexVita &middot; working page</span>
+      <h1>Build Tracker</h1>
+      <p class="tr-sub">Personal equity portfolio programme: what is built, what is next, and the four-week ladder to 30 October 2026.</p>
+    </div>
+    <div class="tr-stamps">
+      Data as at <b>2026-10-02</b><br>
+      Window <b>2026-10-05</b> to <b>2026-10-30</b><br>
+      Next review <b>2026-10-30</b>
+    </div>
+  </div>
+  <div class="tr-answer">
+    <h2>What happens in four weeks</h2>
+    <p>In four weeks the parked capital does not move. It is confirmed as the year-3 withdrawal pot in a naira money market fund, not equity awaiting deployment. What changes in four weeks is that we will know what it actually yields, that the dividends which feed it are being swept into it, and exactly what the next fresh money buys.</p>
+  </div>
+  <h2 class="sec">1. The parked sum</h2>
+  <p class="secnote">The capital-preserving sleeve that funds the year-3 withdrawal, so the equities are never sold to meet it.</p>
+  <div class="tr-cards">
+    <div class="tr-card"><h3>Vehicle</h3><div class="big" style="font-size:1.1rem">Cowrywise money market fund</div><p>Money market fund (confirmed 2026-10-03)</p></div>
+    <div class="tr-card"><h3>Decision</h3><div class="big" style="font-size:1.1rem">Stays as it is</div><p>R-2026-10-03-02 is closed: the two to four week parking is not a prelude to deployment. R-2026-10-03-06 is accepted: the sum is designated the withdrawal pot.</p></div>
+    <div class="tr-card"><h3>Yield</h3><div class="big" style="font-size:1.1rem">Not yet confirmed</div><p>The platform's own published effective yield for this fund has not yet been confirmed in writing. The market range below is a reference, not this fund's rate.</p></div>
+    <div class="tr-card"><h3>Market reference</h3><p style="margin-top:0">Money market median <b>16.68%</b>, best <b>20.54%</b> across 47 funds. Platform comparison reports this app's money market fund at 20 to 22 per cent per annum, T+3, minimum N100. Inflation 15.39%, 364-day bill 16.50%, policy rate 26.50%.</p></div>
+  </div>
+  <h2 class="sec" style="font-size:1.05rem;border:none;margin-top:1.75rem">Where the pot stands at year 3</h2>
+  <div class="tr-scroll"><table class="tr-t"><thead><tr><th>Yield</th><th class="num">Value at year 3<br><span style="font-weight:400">annual</span></th><th class="num">Value at year 3<br><span style="font-weight:400">quarterly</span></th><th>Lower target</th><th>Higher target</th></tr></thead><tbody>
+<tr><td>16.68%</td><td class="num">1.59 times</td><td class="num">1.63 times</td><td>covered</td><td>short</td></tr>
+<tr><td>19.00%</td><td class="num">1.69 times</td><td class="num">1.75 times</td><td>covered</td><td>short</td></tr>
+<tr><td>20.54%</td><td class="num">1.75 times</td><td class="num">1.82 times</td><td>covered</td><td>short</td></tr>
+<tr><td>22.00%</td><td class="num">1.82 times</td><td class="num">1.90 times</td><td>covered</td><td>short</td></tr>
+  </tbody></table></div>
+  <p class="tr-note">Projection from the parked sum, no further additions. The lower target is sixty per cent of the original equity cost; the higher target is sixty per cent of all capital deployed. Which reading applies is still open, and it is the question that decides whether the pot needs monthly contributions. Amounts are shown in the full local build only.</p>
+  <div class="tr-card" style="margin-top:1rem"><h3>Outstanding on the pot</h3><ul>
+    <li>Confirm fund name, SEC category and current published effective yield, in writing</li>
+    <li>Confirm redemption timeline on this account (T+1 to T+3 expected)</li>
+    <li>Confirm the management fee and whether the platform charges anything on top</li>
+    <li>Obtain the CHN in writing from Cowrywise support</li>
+    <li>Verify the e-dividend mandate and identify the bank account that receives dividends</li>
+    <li>Resolve the missing MTN May 2026 final (bank statement, then the SEC unclaimed-dividend portal)</li>
+    <li>Decide whether the year-3 target is nominal or real, which decides whether the pot needs contributions</li>
+  </ul></div>
+  <h2 class="sec">2. Portfolio snapshot</h2>
+  <p class="secnote">12 holdings, priced from the Exchange close of 2026-10-02. This page states weights, dates and statuses. It deliberately omits absolute amounts and net values.</p>
+  <div class="tr-scroll"><table class="tr-t"><thead><tr>
+    <th>Holding</th><th>Sector</th><th>Weight</th><th class="num">Unrealised gain</th>
+    <th>Cap headroom</th><th>Price source</th>
+  </tr></thead><tbody>
+    <tr>
+      <td><b>MTNN</b><br><span style="font-size:.78rem;color:var(--gray)">MTN Nigeria Communications Plc</span></td>
+      <td>ICT</td>
+      <td><div class="bar"><span class="barfill bar-gold" style="width:34.87%"></span><span class="barcap" style="left:12.00%"></span></div><div class="tr-note" style="margin:2px 0 0">34.87%</div></td>
+      <td class="num">+10.1%</td>
+      <td><span class="chip chip-blocked">over cap</span></td>
+      <td style="font-size:.78rem;color:var(--gray)">Exchange close</td>
+    </tr>
+    <tr>
+      <td><b>FIDELITYBK</b><br><span style="font-size:.78rem;color:var(--gray)">Fidelity Bank Plc</span></td>
+      <td>Financial Services</td>
+      <td><div class="bar"><span class="barfill bar-gold" style="width:11.11%"></span><span class="barcap" style="left:12.00%"></span></div><div class="tr-note" style="margin:2px 0 0">11.11%</div></td>
+      <td class="num">+26.0%</td>
+      <td>0.89 points to cap</td>
+      <td style="font-size:.78rem;color:var(--gray)">Exchange close</td>
+    </tr>
+    <tr>
+      <td><b>HONYFLOUR</b><br><span style="font-size:.78rem;color:var(--gray)">Honeywell Flour Mills Plc</span></td>
+      <td>Consumer Goods</td>
+      <td><div class="bar"><span class="barfill bar-gold" style="width:10.03%"></span><span class="barcap" style="left:12.00%"></span></div><div class="tr-note" style="margin:2px 0 0">10.03%</div></td>
+      <td class="num">+73.8%</td>
+      <td>1.97 points to cap</td>
+      <td style="font-size:.78rem;color:var(--gray)">Exchange close</td>
+    </tr>
+    <tr>
+      <td><b>ACCESSCORP</b><br><span style="font-size:.78rem;color:var(--gray)">Access Holdings Plc</span></td>
+      <td>Financial Services</td>
+      <td><div class="bar"><span class="barfill bar-gold" style="width:9.62%"></span><span class="barcap" style="left:12.00%"></span></div><div class="tr-note" style="margin:2px 0 0">9.62%</div></td>
+      <td class="num">+31.6%</td>
+      <td>2.38 points to cap</td>
+      <td style="font-size:.78rem;color:var(--gray)">Exchange close</td>
+    </tr>
+    <tr>
+      <td><b>NB</b><br><span style="font-size:.78rem;color:var(--gray)">Nigerian Breweries Plc</span></td>
+      <td>Consumer Goods</td>
+      <td><div class="bar"><span class="barfill bar-gold" style="width:7.85%"></span><span class="barcap" style="left:12.00%"></span></div><div class="tr-note" style="margin:2px 0 0">7.85%</div></td>
+      <td class="num">+127.1%</td>
+      <td>4.15 points to cap</td>
+      <td style="font-size:.78rem;color:var(--gray)">Exchange close</td>
+    </tr>
+    <tr>
+      <td><b>AIICO</b><br><span style="font-size:.78rem;color:var(--gray)">AIICO Insurance Plc</span></td>
+      <td>Financial Services</td>
+      <td><div class="bar"><span class="barfill bar-gold" style="width:7.03%"></span><span class="barcap" style="left:12.00%"></span></div><div class="tr-note" style="margin:2px 0 0">7.03%</div></td>
+      <td class="num">+2.1%</td>
+      <td>4.97 points to cap</td>
+      <td style="font-size:.78rem;color:var(--gray)">Exchange close</td>
+    </tr>
+    <tr>
+      <td><b>WEMABANK</b><br><span style="font-size:.78rem;color:var(--gray)">Wema Bank Plc</span></td>
+      <td>Financial Services</td>
+      <td><div class="bar"><span class="barfill bar-gold" style="width:6.59%"></span><span class="barcap" style="left:12.00%"></span></div><div class="tr-note" style="margin:2px 0 0">6.59%</div></td>
+      <td class="num">+294.6%</td>
+      <td>5.41 points to cap</td>
+      <td style="font-size:.78rem;color:var(--gray)">Exchange close</td>
+    </tr>
+    <tr>
+      <td><b>VETGOODS</b><br><span style="font-size:.78rem;color:var(--gray)">Vetiva Consumer Goods ETF</span> <span class="chip chip-blocked">etf</span></td>
+      <td>Consumer Goods</td>
+      <td><div class="bar"><span class="barfill bar-gold" style="width:6.18%"></span><span class="barcap" style="left:12.00%"></span></div><div class="tr-note" style="margin:2px 0 0">6.18%</div></td>
+      <td class="num">+30.0%</td>
+      <td>5.82 points to cap</td>
+      <td style="font-size:.78rem;color:var(--gray)">broker mark</td>
+    </tr>
+    <tr>
+      <td><b>FCMB</b><br><span style="font-size:.78rem;color:var(--gray)">FCMB Group Plc</span></td>
+      <td>Financial Services</td>
+      <td><div class="bar"><span class="barfill bar-gold" style="width:2.33%"></span><span class="barcap" style="left:12.00%"></span></div><div class="tr-note" style="margin:2px 0 0">2.33%</div></td>
+      <td class="num">+2.8%</td>
+      <td>9.67 points to cap</td>
+      <td style="font-size:.78rem;color:var(--gray)">Exchange close</td>
+    </tr>
+    <tr>
+      <td><b>CWG</b><br><span style="font-size:.78rem;color:var(--gray)">CWG Plc</span></td>
+      <td>ICT</td>
+      <td><div class="bar"><span class="barfill bar-gold" style="width:2.18%"></span><span class="barcap" style="left:12.00%"></span></div><div class="tr-note" style="margin:2px 0 0">2.18%</div></td>
+      <td class="num">+154.6%</td>
+      <td>9.82 points to cap</td>
+      <td style="font-size:.78rem;color:var(--gray)">Exchange close</td>
+    </tr>
+    <tr>
+      <td><b>ETRANZACT</b><br><span style="font-size:.78rem;color:var(--gray)">eTranzact International Plc</span></td>
+      <td>ICT</td>
+      <td><div class="bar"><span class="barfill bar-gold" style="width:1.16%"></span><span class="barcap" style="left:12.00%"></span></div><div class="tr-note" style="margin:2px 0 0">1.16%</div></td>
+      <td class="num">-49.8%</td>
+      <td>10.84 points to cap</td>
+      <td style="font-size:.78rem;color:var(--gray)">Exchange close</td>
+    </tr>
+    <tr>
+      <td><b>INTENEGINS</b><br><span style="font-size:.78rem;color:var(--gray)">International Energy Insurance Plc</span></td>
+      <td>Financial Services</td>
+      <td><div class="bar"><span class="barfill bar-gold" style="width:1.06%"></span><span class="barcap" style="left:12.00%"></span></div><div class="tr-note" style="margin:2px 0 0">1.06%</div></td>
+      <td class="num">-29.7%</td>
+      <td>10.94 points to cap</td>
+      <td style="font-size:.78rem;color:var(--gray)">Exchange close</td>
+    </tr>
+  </tbody></table></div>
+  <p class="tr-note">The dark marker on each weight bar is the working single-stock cap of 12%. A holding whose bar passes the marker is above it.</p>
+  <h2 class="sec">3. Concentration</h2>
+  <div class="tr-card" style="margin-bottom:1rem"><h3>Sector weights</h3><div class="tr-scroll"><table class="tr-t" style="border:none">
+      <tr><td style="border:none;padding:.3rem .4rem">ICT</td><td style="border:none;padding:.3rem .4rem;width:45%"><div class="bar"><span class="barfill bar-navy" style="width:38.20%"></span><span class="barcap" style="left:35.00%"></span></div></td><td style="border:none;padding:.3rem .4rem" class="num">38.20%<br><span style="color:#93231f;font-size:.78rem">needs 9% of the book of new money outside this sector</span></td></tr>
+      <tr><td style="border:none;padding:.3rem .4rem">Financial Services</td><td style="border:none;padding:.3rem .4rem;width:45%"><div class="bar"><span class="barfill bar-navy" style="width:37.74%"></span><span class="barcap" style="left:35.00%"></span></div></td><td style="border:none;padding:.3rem .4rem" class="num">37.74%<br><span style="color:#93231f;font-size:.78rem">needs 8% of the book of new money outside this sector</span></td></tr>
+      <tr><td style="border:none;padding:.3rem .4rem">Consumer Goods</td><td style="border:none;padding:.3rem .4rem;width:45%"><div class="bar"><span class="barfill bar-navy" style="width:24.06%"></span><span class="barcap" style="left:35.00%"></span></div></td><td style="border:none;padding:.3rem .4rem" class="num">24.06%</td></tr>
+    </table></div><p>Cap 35% a sector. The marker shows the cap on each bar. Sector caps bite before the single-stock cap does, and parking the new money outside the equity book leaves two sectors above the cap.</p></div>
+  <div class="tr-cards">
+    <div class="tr-card"><h3>Largest position</h3><div class="big">34.87%</div><p style="margin-top:.3rem">MTN Nigeria Communications Plc, at 34.87% of the equity book. Glide path recorded on 2026-10-03: 25 per cent now, 20 per cent by end-2027, reached with new money and without selling. The working single-stock cap is 12%.</p><div class="bar"><span class="barfill bar-red" style="width:34.87%"></span><span class="barcap" style="left:25.00%"></span></div></div>
+    <div class="tr-card"><h3>Dilution ladder</h3><p style="margin-top:0">New money, not into the largest position, needed to bring it to each weight without selling a unit.</p><div class="tr-scroll"><table class="tr-t" style="border:none"><tr><td style="border:none;padding:.3rem .4rem;color:var(--gray);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em">Bring it to</td><td style="border:none;padding:.3rem .4rem;text-align:right;color:var(--gray);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em">New money needed</td></tr>
+      <tr><td style="border:none;padding:.3rem .4rem">to 25 per cent</td><td style="border:none;padding:.3rem .4rem" class="num">39% of the book</td></tr>
+      <tr><td style="border:none;padding:.3rem .4rem">to 20 per cent</td><td style="border:none;padding:.3rem .4rem" class="num">74% of the book</td></tr>
+      <tr><td style="border:none;padding:.3rem .4rem">to 12 per cent</td><td style="border:none;padding:.3rem .4rem" class="num">191% of the book</td></tr>
+    </table></div><p>The standing instruction is no sale of the largest position; the weight is reduced with new money only. This is the arithmetic of that choice.</p></div>
+  </div>
+  <h2 class="sec">4. The four-week ladder</h2>
+  <p class="secnote">2026-10-05 to 2026-10-30. Trading days are captured nightly at 20:00 from Monday to Friday.</p>
+  <div class="tr-week">
+    <span class="when">W1 &middot; 2026-10-05 to 2026-10-09</span>
+    <h3>Prove the pot</h3>
+    <p class="del"><b>Focus:</b> Close the paperwork and the funding pipe before building anything else.</p>
+    <ul>
+      <li>Obtain in writing: fund name, SEC category, current effective yield, redemption timeline, fees</li>
+      <li>Compare the confirmed yield against the money market range (median 16.68, top 20.54) and decide whether to move it</li>
+      <li>Obtain the CHN from Cowrywise</li>
+      <li>Verify the e-dividend mandate and identify the receiving bank account</li>
+      <li>Resolve the missing MTN May 2026 final against the bank statement</li>
+    </ul>
+    <p class="del"><b>Deliverable:</b> The pot confirmed: a written yield, a redemption time, and a funding pipe.</p>
+    <p class="gate"><b>Gate:</b> If the confirmed yield is materially below the market or redemption is slower than T+3, the vehicle is replaced rather than accepted.</p>
+  </div>
+  <div class="tr-week">
+    <span class="when">W2 &middot; 2026-10-12 to 2026-10-16</span>
+    <h3>Build the dividend calendar and the yield screen</h3>
+    <p class="del"><b>Focus:</b> Highest-value unbuilt item on the log. The year-3 arithmetic turns on book yield, not market return.</p>
+    <ul>
+      <li>Twelve-holding dividend calendar: DPS, qualification date, payment date, registrar</li>
+      <li>Yield screen across the captured NGX universe</li>
+      <li>Mark the mid-October bank interim qualification window (a 2024 precedent: interim qualified 17 October, paid 25 October)</li>
+      <li>Rank a buy list with target prices for the next fresh money</li>
+    </ul>
+    <p class="del"><b>Deliverable:</b> The dividend timeline for twelve months, and a ranked yield buy list.</p>
+    <p class="gate"><b>Gate:</b> No equity purchase is made from the pot. The list exists so that the next new money has a defined destination.</p>
+  </div>
+  <div class="tr-week">
+    <span class="when">W3 &middot; 2026-10-19 to 2026-10-23</span>
+    <h3>Q3 filings open, ratios built</h3>
+    <p class="del"><b>Focus:</b> The information window. Unaudited third-quarter accounts begin to land.</p>
+    <ul>
+      <li>Capture Q3 2026 filings as they are released (board meetings from 22 October)</li>
+      <li>Build the ratios per holding: earnings multiple, price to book, return on equity, dividend cover, payout</li>
+      <li>Score each holding against the requirement of an income book</li>
+    </ul>
+    <p class="del"><b>Deliverable:</b> A keep, trim or consolidate table for all twelve holdings, on evidence.</p>
+    <p class="gate"><b>Gate:</b> Ratios are computed from filings, not from screen estimates, or they are marked unverified.</p>
+  </div>
+  <div class="tr-week">
+    <span class="when">W4 &middot; 2026-10-26 to 2026-10-30</span>
+    <h3>Decide and act</h3>
+    <p class="del"><b>Focus:</b> Issuer deadline for Q3 2026 accounts is 30 October. The window closes with the season.</p>
+    <ul>
+      <li>Confirm the year-3 target reading: nominal or real (this decides whether the pot needs monthly contributions)</li>
+      <li>Decide the tail consolidation question on the log</li>
+      <li>Re-run the year-3 model on confirmed inputs</li>
+      <li>Close the parking recommendation formally and record the pot's first monthly statement</li>
+      <li>Set the monitoring cadence: monthly pot statement, weekly price capture, quarterly review</li>
+    </ul>
+    <p class="del"><b>Deliverable:</b> A written decision pack, and the pot's first monthly statement.</p>
+    <p class="gate"><b>Gate:</b> Nothing is sold and nothing is bought without a written reason and a date, per the working protocol.</p>
+  </div>
+  <h2 class="sec">5. What we are building</h2>
+  <p class="secnote">The programme, in build order. Anything not marked live is either queued behind the dividend work or blocked on an external answer.</p>
+  <div class="tr-scroll"><table class="tr-t"><thead><tr><th>Component</th><th>Status</th><th>Next action</th><th>Due</th></tr></thead><tbody>
+    <tr><td><b>NGX daily price capture</b><div class="tr-note" style="margin:2px 0 0">scripts/ngx_capture.py, cron 6b0ef215b0b86e20</div></td><td><span class="chip chip-live">Live</span></td><td>Runs weekdays at 20:00; verify the session was captured</td><td style="white-space:nowrap">Continuous</td></tr>
+    <tr><td><b>Holdings ledger with cost basis</b><div class="tr-note" style="margin:2px 0 0">NGX/holdings/holdings-2026-10-03-broker-statement.csv</div></td><td><span class="chip chip-live">Live</span></td><td>Reconcile against a fresh broker statement when one is issued</td><td style="white-space:nowrap">Monthly</td></tr>
+    <tr><td><b>Year-3 withdrawal model</b><div class="tr-note" style="margin:2px 0 0">scripts/portfolio_model.py</div></td><td><span class="chip chip-live">Live</span></td><td>Re-run on the confirmed target reading</td><td style="white-space:nowrap">2026-10-30</td></tr>
+    <tr><td><b>Fund-yield-to-equity model</b><div class="tr-note" style="margin:2px 0 0">scripts/fund_yield_model.py</div></td><td><span class="chip chip-live">Live</span></td><td>Re-run once the pot's yield is confirmed</td><td style="white-space:nowrap">2026-10-09</td></tr>
+    <tr><td><b>Dividend log</b><div class="tr-note" style="margin:2px 0 0">NGX/holdings/dividend-log.md</div></td><td><span class="chip chip-partial">Partial</span></td><td>Verify the Fidelity 2026 dates and settle whether a VETGOODS distribution exists</td><td style="white-space:nowrap">2026-10-16</td></tr>
+    <tr><td><b>Dividend calendar, twelve holdings</b><div class="tr-note" style="margin:2px 0 0">R-2026-10-03-05</div></td><td><span class="chip chip-queued">Queued</span></td><td>Build with registrar per holding</td><td style="white-space:nowrap">2026-10-16</td></tr>
+    <tr><td><b>Yield screen</b><div class="tr-note" style="margin:2px 0 0">R-2026-10-03-05</div></td><td><span class="chip chip-queued">Queued</span></td><td>Rank the universe on trailing yield with a dividend cover filter</td><td style="white-space:nowrap">2026-10-16</td></tr>
+    <tr><td><b>Ratio screen</b><div class="tr-note" style="margin:2px 0 0">This tracker, week 3</div></td><td><span class="chip chip-queued">Queued</span></td><td>Earnings multiple, price to book, return on equity, payout</td><td style="white-space:nowrap">2026-10-23</td></tr>
+    <tr><td><b>Q3 2026 filings pipeline</b><div class="tr-note" style="margin:2px 0 0">NGX issuer deadline 30-Oct-26</div></td><td><span class="chip chip-queued">Queued</span></td><td>Capture filings as released; season 20 to 30 October</td><td style="white-space:nowrap">2026-10-30</td></tr>
+    <tr><td><b>Pot statement and monthly cadence</b><div class="tr-note" style="margin:2px 0 0">NGX/holdings/withdrawal-pot.md</div></td><td><span class="chip chip-building">Building</span></td><td>First statement at the close of the window</td><td style="white-space:nowrap">2026-10-30</td></tr>
+    <tr><td><b>Tracker dashboard</b><div class="tr-note" style="margin:2px 0 0">This page</div></td><td><span class="chip chip-live">Live</span></td><td>Rebuilt weekly; figures recomputed from captured data</td><td style="white-space:nowrap">Weekly</td></tr>
+    <tr><td><b>ETF price source</b><div class="tr-note" style="margin:2px 0 0">NGX/README.md, known limits</div></td><td><span class="chip chip-blocked">Blocked</span></td><td>The Exchange equities endpoint does not carry ETFs; the holding is priced from the broker mark meanwhile</td><td style="white-space:nowrap">2026-10-30</td></tr>
+    <tr><td><b>Market knowledge base</b><div class="tr-note" style="margin:2px 0 0">Build order, item 5</div></td><td><span class="chip chip-queued">Queued</span></td><td>Exchange factbook and rulebook, CBN and NBS series, then index it</td><td style="white-space:nowrap">November</td></tr>
+  </tbody></table></div>
+  <h2 class="sec">6. Advice on the log</h2>
+  <p class="secnote">Every recommendation is written with a date and a reason before the outcome is known, so it can be scored. Declined advice stays on the log.</p>
+  <div class="tr-scroll"><table class="tr-t"><thead><tr><th>Ref</th><th>Recommendation</th><th>Status</th><th>Note</th></tr></thead><tbody>
+    <tr><td style="white-space:nowrap">R-2026-10-03-01</td><td>Trim MTNN to the single-stock cap</td><td><span class="chip chip-pending">Pending</span></td><td>Superseded in practice by the standing instruction: no sale; dilute with new money</td></tr>
+    <tr><td style="white-space:nowrap">R-2026-10-03-02</td><td>Park the fresh sum in a money market fund for two to four weeks</td><td><span class="chip chip-closed">Closed</span></td><td>Closed 2026-10-03 on confirmation that the parking is not a prelude to deployment</td></tr>
+    <tr><td style="white-space:nowrap">R-2026-10-03-03</td><td>Bank every dividend from the next payment onward</td><td><span class="chip chip-pending">Pending</span></td><td>Needs the e-dividend mandate and a sweep instruction to work</td></tr>
+    <tr><td style="white-space:nowrap">R-2026-10-03-04</td><td>Consolidate the four tail positions</td><td><span class="chip chip-pending">Pending</span></td><td>Four lines, 5.1 per cent of the book between them</td></tr>
+    <tr><td style="white-space:nowrap">R-2026-10-03-05</td><td>Build the dividend calendar and yield screen before anything else</td><td><span class="chip chip-in-progress">In progress</span></td><td>Weeks 2 and 3 of this window</td></tr>
+    <tr><td style="white-space:nowrap">R-2026-10-03-06</td><td>Designate the parked sum as the year-3 withdrawal pot</td><td><span class="chip chip-accepted">Accepted</span></td><td>Accepted 2026-10-03: the money stays where it is</td></tr>
+    <tr><td style="white-space:nowrap">R-2026-10-03-07</td><td>Let the fund compound; begin any equity drip at year 3</td><td><span class="chip chip-pending">Pending</span></td><td>Vehicle now confirmed as a money market fund, which re-opens the arithmetic at the higher yield</td></tr>
+  </tbody></table></div>
+  <h2 class="sec">7. Dividend facts established</h2>
+  <p class="secnote">The plan turns on book yield, so this table records what is verified and what is not. An unverified date is written as unverified rather than estimated.</p>
+  <div class="tr-scroll"><table class="tr-t"><thead><tr><th>Holding</th><th>Established</th><th>Still open</th></tr></thead><tbody>
+    <tr><td><b>MTNN</b></td><td>FY2025 total declared N20.00; H1 2026 interim N26.00 paid 7 September 2026; registrar Coronation</td><td>May 2026 final of N5.925k gross unaccounted for; yield between 2.4 and 6.2 per cent and unresolved</td></tr>
+    <tr><td><b>FIDELITYBK</b></td><td>Semi-annual distributor; FY2025 final N1.25 qualified 24 April 2026</td><td>2026 interim dates not verified from the company's own announcement</td></tr>
+    <tr><td><b>VETGOODS</b></td><td>A fund, not a company; any payment is a distribution by the fund manager</td><td>No distribution announcement published; also trades about 18 per cent above stated NAV</td></tr>
+    <tr><td><b>AIICO</b></td><td>12 kobo final dividend verified</td><td>Confirm the full-year position and registrar</td></tr>
+  </tbody></table></div>
+  <h2 class="sec">8. Data health and open questions</h2>
+  <div class="tr-cards">
+    <div class="tr-card"><h3>Price capture</h3><p style="margin-top:0">Latest session captured: <b>2026-10-02</b>. Sessions on file: <b>1</b>. The capture runs weekdays at 20:00 and is idempotent.</p></div>
+    <div class="tr-card"><h3>Year-3 model</h3><p style="margin-top:0">Target met in <b>9 of 9</b> scenarios tested, from a -50 per cent fall to a 30 per cent rise. Assumed book yield 7.00%, dealing cost 2.0%.</p></div>
+    <div class="tr-card"><h3>Known limits</h3><p style="margin-top:0">One holding is a fund and is not carried on the Exchange equities endpoint, so it is priced from the broker mark. The Exchange ticker for the largest holding differs from the broker screen name.</p></div>
+  </div>
+  <div class="tr-scroll"><table class="tr-t" style="margin-top:1rem"><thead><tr><th>Open question</th><th>Why it matters</th><th>Where</th></tr></thead><tbody>
+    <tr><td>Is the year-3 target nominal or real?</td><td>Decides whether the pot needs further contributions</td><td style="font-size:.8rem;color:var(--gray)">Year-3 plan, section 2</td></tr>
+    <tr><td>Which single-stock cap is in force?</td><td>The tracker shows 12 per cent as the recommended working cap against a 25 per cent glide path for MTNN</td><td style="font-size:.8rem;color:var(--gray)">Year-3 plan, section 4</td></tr>
+    <tr><td>Which Fidelity interim window applies in 2026?</td><td>Determines whether any new money can be timed to a qualification date</td><td style="font-size:.8rem;color:var(--gray)">Dividend log, item 2</td></tr>
+    <tr><td>What is the pot's actual yield?</td><td>Every projection on this page moves with it</td><td style="font-size:.8rem;color:var(--gray)">Week 1</td></tr>
+    <tr><td>Is the ETF price source findable?</td><td>One holding cannot be priced from the Exchange endpoint</td><td style="font-size:.8rem;color:var(--gray)">NGX/README.md</td></tr>
+    <tr><td>What dealing cost does the platform charge on a sale?</td><td>The model assumes 2 per cent, which is a placeholder</td><td style="font-size:.8rem;color:var(--gray)">Year-3 plan, checks</td></tr>
+  </tbody></table></div>
+  <p class="tr-note" style="margin-top:2rem">Analysis and advice only. No orders are drafted and the broker account is never touched. Rebuilt from the captured data and the programme record; nothing on this page is typed by hand.</p>
+</main>
+<footer>
+  <p>LexVita &mdash; Law, Tech &amp; Discovery. &copy; 2026.</p>
+</footer>
+</body>
+</html>
